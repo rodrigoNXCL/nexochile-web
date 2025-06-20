@@ -12,7 +12,7 @@ export default function ContactForm() {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.nombre || !form.correo || !form.mensaje) {
       setError("Por favor, completa todos los campos.");
@@ -22,17 +22,45 @@ export default function ContactForm() {
       setError("Por favor, ingresa un correo válido.");
       return;
     }
-    // Enviar por mailto (puedes cambiar a backend más adelante)
-    const mailto = `mailto:contacto@nxchile.com?subject=Contacto desde Web&body=Nombre: ${encodeURIComponent(form.nombre)}%0ACorreo: ${encodeURIComponent(form.correo)}%0AMensaje: ${encodeURIComponent(form.mensaje)}`;
-    window.location.href = mailto;
-    setSent(true);
-    setForm({ nombre: "", correo: "", mensaje: "" });
+
+    // Enviar datos a Formspree
+    try {
+      const res = await fetch("https://formspree.io/f/xnnvbjao", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify({
+          nombre: form.nombre,
+          correo: form.correo,
+          mensaje: form.mensaje,
+        }),
+      });
+
+      if (res.ok) {
+        setSent(true);
+        setForm({ nombre: "", correo: "", mensaje: "" });
+      } else {
+        setError("Hubo un error al enviar el mensaje. Intenta nuevamente.");
+      }
+    } catch (err) {
+      setError("Error de red. Por favor, intenta más tarde.");
+    }
   };
+
+  if (sent) {
+    return (
+      <section>
+        <div className="p-8 text-center text-lg text-nxorange font-semibold">
+          ¡Gracias por contactarnos!<br />
+          Te responderemos a la brevedad.
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
       <h2 className="text-2xl font-bold text-nxorange mb-4">Contáctanos</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
           name="nombre"
@@ -58,7 +86,6 @@ export default function ContactForm() {
           className="border-b-2 border-nxorange focus:outline-none py-2 px-1 text-nxblack placeholder-gray-400 resize-none"
         />
         {error && <div className="text-red-600 text-sm">{error}</div>}
-        {sent && <div className="text-green-600 text-sm">¡Mensaje preparado! Revisa tu correo para enviarlo.</div>}
         <button
           type="submit"
           className="bg-nxorange text-white font-bold py-2 px-6 rounded-full shadow hover:bg-nxblack hover:text-nxorange transition"
