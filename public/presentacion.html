@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SURBERRIES · Continuidad Digital Exportadora | NXCHILE TECH</title>
+  <!-- Tipografía más moderna: sans-serif geométrica + variable -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- TailwindCSS + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'carbon': '#0F0F0F',
+            'deep-green': '#0F3B2C',
+            'burgundy': '#8A1C3C',
+            'beige-light': '#F7F5F0',
+            'offwhite': '#FFFFFF',
+            'charcoal': '#1E1E1E',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'fade-in': 'fadeIn 1s ease forwards',
+            'glow': 'glow 2.5s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            glow: {
+              '0%, 100%': { boxShadow: '0 0 5px rgba(138,28,60,0.3)' },
+              '50%': { boxShadow: '0 0 20px rgba(138,28,60,0.6)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Estilos modernos y efectos */
+    body {
+      background-color: #F7F5F0;
+      font-family: 'Space Grotesk', sans-serif;
+      scroll-behavior: smooth;
+    }
+    /* Scrollbar minimalista */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #E4E0D6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8A1C3C;
+      border-radius: 10px;
+    }
+    /* efecto glassmorphism moderno */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(0px);
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: all 0.4s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.12);
+      border-color: rgba(15,59,44,0.15);
+    }
+    .dark-glass {
+      background: rgba(15,15,15,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    /* Navegación moderna */
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #8A1C3C;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover:after {
+      width: 100%;
+    }
+    /* Secciones fade-in */
+    .section-fade {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .section-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Botón con brillo sutil */
+    .btn-primary {
+      transition: all 0.3s ease;
+      background: #8A1C3C;
+    }
+    .btn-primary:hover {
+      background: #0F3B2C;
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px -5px rgba(138,28,60,0.4);
+    }
+    /* Oferta destacada */
+    .offer-badge {
+      animation: pulse-subtle 2s infinite;
+    }
+    @keyframes pulse-subtle {
+      0% { opacity: 0.8; transform: scale(1);}
+      50% { opacity: 1; transform: scale(1.02); background: #8A1C3C; color: white; }
+      100% { opacity: 0.8; transform: scale(1);}
+    }
+  </style>
+</head>
+<body class="antialiased text-carbon overflow-x-hidden">
+
+  <!-- HEADER con logos integrados (cliente SURBERRIES + NXCHILE TECH) -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-black/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-5 md:gap-10">
+        <!-- Logo SURBERRIES -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-deep-green flex items-center justify-center text-white text-sm font-bold shadow-sm">S</div>
+          <span class="font-sans text-xl font-semibold tracking-tight text-carbon">SURBERRIES</span>
+        </div>
+        <div class="w-px h-7 bg-carbon/20 hidden sm:block"></div>
+        <!-- Logo NXCHILE TECH -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-burgundy flex items-center justify-center text-white text-sm font-bold shadow-sm">N</div>
+          <span class="font-sans text-md font-semibold tracking-wide text-carbon/90">NXCHILE<span class="text-burgundy"> TECH</span></span>
+        </div>
+      </div>
+      <nav class="hidden md:flex gap-10 text-sm font-medium">
+        <a href="#valor" class="nav-link text-carbon/80 hover:text-carbon">Valor</a>
+        <a href="#web-social" class="nav-link text-carbon/80 hover:text-carbon">Web+RRSS</a>
+        <a href="#plan-unico" class="nav-link text-carbon/80 hover:text-carbon">Plan Único</a>
+        <a href="#soporte" class="nav-link text-carbon/80 hover:text-carbon">Soporte</a>
+        <a href="#cierre" class="nav-link text-carbon/80 hover:text-carbon">Continuidad</a>
+      </nav>
+      <a href="#oferta" class="hidden md:block text-sm px-5 py-2 rounded-full border border-carbon/20 hover:border-burgundy hover:bg-burgundy/5 transition-all">Conversemos</a>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <!-- SECCIÓN 1 — HERO (moderna, video/imagen berries premium) -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-black/55 z-10"></div>
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+          <source src="https://videos.pexels.com/video-files/4170428/4170428-uhd_2732_1440_25fps.mp4" type="video/mp4">
+          <!-- fallback image -->
+          <img src="https://images.unsplash.com/photo-1601370690183-1c7796ecec61?q=80&w=2070&auto=format" alt="Berries premium">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/30 to-transparent z-10"></div>
+      </div>
+      <div class="relative z-20 max-w-7xl mx-auto px-6 md:px-12 text-center md:text-left">
+        <div class="inline-block mb-6 animate-fade-in">
+          <span class="bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wider">Continuidad Exportadora · NXCHILE TECH</span>
+        </div>
+        <h1 class="font-sans text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] tracking-tighter animate-fade-up [animation-delay:0.1s]">Presencia digital corporativa<br>para una <span class="border-b-4 border-burgundy">exportadora moderna</span>.</h1>
+        <p class="text-white/90 text-lg md:text-2xl mt-6 max-w-2xl mx-auto md:mx-0 font-light animate-fade-up [animation-delay:0.2s]">NXCHILE mantiene la presencia digital activa, consistente y profesional de SURBERRIES, alineada a su imagen exportadora. Sin intermitencias, sin esfuerzo interno.</p>
+        <div class="flex flex-col sm:flex-row gap-5 mt-10 justify-center md:justify-start animate-fade-up [animation-delay:0.3s]">
+          <a href="#plan-unico" class="btn-primary px-8 py-4 rounded-full text-white font-semibold shadow-xl text-center transition-all">Ver propuesta integral <i class="fas fa-arrow-right ml-2 text-sm"></i></a>
+          <a href="#contexto" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/30 rounded-full font-medium hover:bg-white/20 transition-all text-center">Descubrir más <i class="fas fa-chevron-down ml-2 text-xs"></i></a>
+        </div>
+        <!-- Mockups minimal -->
+        <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-16 opacity-80">
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm"><i class="fas fa-globe"></i> exportsurberries.com</div>
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm"><i class="fab fa-instagram"></i> Continuidad premium</div>
+        </div>
+      </div>
+      <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce text-white/40 text-[12px]">SCROLL</div>
+    </section>
+
+    <!-- SECCIÓN 2 — CONTEXTO ACTUAL modern split -->
+    <section id="contexto" class="min-h-screen py-28 px-6 md:px-12 bg-beige-light section-fade">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-14 items-center">
+          <div>
+            <span class="text-burgundy font-bold text-sm uppercase tracking-widest">Realidad exportadora 2025</span>
+            <h2 class="font-sans text-4xl md:text-6xl font-bold mt-4 leading-tight text-carbon">La presencia digital es <span class="text-deep-green">parte de tu imagen exportadora</span>.</h2>
+            <p class="text-gray-700 text-lg mt-6 leading-relaxed">Hoy, una empresa exportadora no solo es evaluada por su producto. También por su continuidad, profesionalismo y consistencia digital. Clientes internacionales validan cada detalle.</p>
+            <div class="mt-8 space-y-4">
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-white/60"><i class="fas fa-ban text-burgundy text-xl w-6"></i><span>Redes abandonadas → desconfianza comercial</span></div>
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-white/80 shadow-sm"><i class="fas fa-check-circle text-deep-green text-xl w-6"></i><span class="font-medium">Presencia corporativa consistente → validación premium</span></div>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div class="grid grid-cols-2 h-80 md:h-96">
+              <div class="bg-carbon/90 flex flex-col items-center justify-center text-center p-5 border-r border-white/10">
+                <i class="fas fa-hourglass-half text-5xl text-white/30 mb-4"></i>
+                <p class="text-white/60 text-sm">Sin continuidad</p>
+                <p class="text-white/30 text-xs">percepción débil</p>
+              </div>
+              <div class="bg-deep-green/95 flex flex-col items-center justify-center text-center p-5">
+                <i class="fas fa-chart-simple text-5xl text-beige-light mb-4"></i>
+                <p class="text-beige-light font-semibold">Presencia activa</p>
+                <p class="text-beige-light/80 text-xs">imagen sólida</p>
+              </div>
+            </div>
+            <div class="absolute bottom-3 right-3 text-white/20 text-[10px]">coherencia digital</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3 — EL VALOR REAL (bloques sin métricas falsas) -->
+    <section id="valor" class="py-28 px-6 md:px-12 bg-white section-fade">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="font-sans text-4xl md:text-5xl font-bold text-carbon">Lo que realmente importa: <span class="text-burgundy">confianza, percepción y respaldo</span></h2>
+          <div class="w-20 h-0.5 bg-deep-green mx-auto mt-6"></div>
+          <p class="text-gray-500 mt-6 text-lg">Sin métricas vacías. Construimos presencia corporativa real.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-infinity text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Continuidad ininterrumpida</h3><p class="text-gray-500 mt-2">Flujo constante de contenido alineado al rubro exportador.</p></div>
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-handshake text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Confianza comercial</h3><p class="text-gray-500 mt-2">Respalda la negociación con clientes internacionales.</p></div>
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-globe-americas text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Presencia global</h3><p class="text-gray-500 mt-2">Imagen corporativa consistente en todos los canales.</p></div>
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-building text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Estructura sólida</h3><p class="text-gray-500 mt-2">La web valida, las redes muestran continuidad.</p></div>
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-bezier-curve text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Coherencia corporativa</h3><p class="text-gray-500 mt-2">Identidad visual premium sin fisuras.</p></div>
+          <div class="glass-card p-8 rounded-2xl text-left"><i class="fas fa-passport text-3xl text-deep-green mb-5"></i><h3 class="font-sans text-2xl font-bold">Validación internacional</h3><p class="text-gray-500 mt-2">Estándar de empresas exportadoras modernas.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4 — WEB + RRSS con coherencia -->
+    <section id="web-social" class="py-28 px-6 md:px-12 bg-beige-light section-fade">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="font-sans text-4xl md:text-5xl font-bold leading-tight"><span class="border-l-8 border-burgundy pl-5">Web + RRSS: un solo ecosistema de confianza</span></h2>
+            <p class="text-gray-700 text-lg mt-6">exportsurberries.com · Instagram & Facebook con estética exportadora premium. Cada publicación refuerza la solidez de SURBERRIES.</p>
+            <div class="flex flex-wrap gap-5 mt-8">
+              <div class="flex items-center gap-2"><i class="fas fa-check-circle text-deep-green"></i><span>Dominio profesional</span></div>
+              <div class="flex items-center gap-2"><i class="fas fa-check-circle text-deep-green"></i><span>Mantención semanal garantizada</span></div>
+              <div class="flex items-center gap-2"><i class="fas fa-check-circle text-deep-green"></i><span>Look & feel exportador</span></div>
+            </div>
+          </div>
+          <div class="relative flex justify-center">
+            <div class="mockup-border bg-white p-4 rounded-3xl w-64 shadow-2xl"><i class="fas fa-laptop-code text-6xl text-carbon/10 block text-center"></i><div class="h-32 bg-gradient-to-br from-deep-green/5 to-burgundy/5 rounded-xl mt-3 flex items-center justify-center text-sm text-carbon/50">exportsurberries.com</div></div>
+            <div class="absolute -bottom-5 -right-5 mockup-border bg-white p-2 rounded-2xl w-32 shadow-xl"><i class="fab fa-instagram text-3xl text-carbon/20 text-center block"></i><div class="h-20 bg-beige-light rounded-md mt-1"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5 — QUÉ HACE NXCHILE (evitando términos de agencia) -->
+    <section class="py-28 px-6 md:px-12 bg-white section-fade">
+      <div class="max-w-5xl mx-auto text-center">
+        <i class="fas fa-shield-haltered text-5xl text-burgundy/50 mb-6"></i>
+        <h2 class="font-sans text-4xl md:text-6xl font-medium tracking-tight">Continuidad digital · Soporte visual · Respaldo corporativo</h2>
+        <div class="h-px w-28 bg-deep-green mx-auto my-8"></div>
+        <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">NXCHILE mantiene activa y consistente la presencia digital de SURBERRIES mediante contenido estratégico alineado al rubro exportador. <strong class="text-carbon">No somos una agencia de marketing: somos el soporte externo que sostiene tu imagen premium.</strong></p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6 — PLAN ÚNICO + PRECIO + OFERTA MAYO (TODO INCLUIDO) -->
+    <section id="plan-unico" class="py-28 px-6 md:px-12 bg-deep-green text-white section-fade">
+      <div class="max-w-6xl mx-auto text-center">
+        <div class="inline-block bg-white/10 backdrop-blur-sm rounded-full px-5 py-1.5 text-sm font-semibold tracking-wide mb-6">Plan Integral · Continuidad Total</div>
+        <h2 class="font-sans text-5xl md:text-6xl font-bold tracking-tight">Un solo plan. <span class="text-beige-light">Todo incluido.</span></h2>
+        <p class="text-white/80 text-xl max-w-2xl mx-auto mt-5">Presencia digital completa sin preocupaciones: web + redes sociales + contenido gráfico + soporte continuo.</p>
+        
+        <!-- Card precio principal -->
+        <div class="mt-12 max-w-3xl mx-auto">
+          <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-white/20 shadow-2xl">
+            <div class="text-6xl font-bold mb-2">$150.000 <span class="text-2xl font-normal text-white/70">/ mes</span></div>
+            <p class="text-white/70 text-sm">mínimo 6 meses continuos · pago por adelantado</p>
+            <div class="h-px bg-white/20 my-6"></div>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Mantención web + hosting incluido</li>
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Publicaciones semanales en RRSS</li>
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Diseño gráfico premium (sin depender de tu equipo)</li>
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Contenido alineado a imagen exportadora</li>
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Fichas técnicas / soporte documental visual</li>
+              <li class="flex items-center gap-3"><i class="fas fa-check-circle text-beige-light"></i>Reporte mensual de continuidad</li>
+            </ul>
+            <div class="mt-8 bg-burgundy/60 rounded-2xl p-4 text-center offer-badge transition-all">
+              <p class="font-bold text-lg"><i class="fas fa-gift mr-2"></i> OFERTA ESPECIAL · CIERRE HOY</p>
+              <p class="text-white/90">Si confirmas hoy, <span class="font-bold text-white text-xl">los días de MAYO van de REGALO</span> dentro del flujo de junio. Ahorro inmediato + continuidad anticipada.</p>
+            </div>
+            <div class="mt-8">
+              <a href="#contacto-final" class="inline-block btn-primary px-10 py-4 rounded-full text-white font-bold text-lg shadow-2xl hover:scale-105 transition-transform">Iniciar continuidad digital →</a>
+            </div>
+          </div>
+        </div>
+        <p class="text-white/50 text-sm mt-8">*Compromiso mínimo 6 meses · facturación mensual adelantada · incluye todo lo descrito</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7 — SOPORTE OPERATIVO DIGITAL (respaldo externo) -->
+    <section id="soporte" class="py-28 px-6 md:px-12 bg-beige-light section-fade">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <span class="text-burgundy font-bold text-sm uppercase tracking-widest">Respaldo externo</span>
+            <h2 class="font-sans text-4xl md:text-5xl font-bold mt-3 leading-tight">Soporte operativo digital: <span class="text-deep-green">sin dependencia interna</span></h2>
+            <p class="text-gray-700 text-lg mt-5">Fichas técnicas, formatos, material visual, continuidad corporativa. NXCHILE funciona como <strong>respaldo externo de continuidad digital</strong> eliminando la carga de tu equipo.</p>
+            <ul class="mt-7 space-y-3">
+              <li class="flex gap-3"><i class="fas fa-database text-deep-green mt-1"></i>Gestión de activos visuales</li>
+              <li class="flex gap-3"><i class="fas fa-sync-alt text-deep-green mt-1"></i>Actualización sin fricción</li>
+              <li class="flex gap-3"><i class="fas fa-archive text-deep-green mt-1"></i>Archivo exportador consistente</li>
+            </ul>
+          </div>
+          <div class="order-1 md:order-2 bg-white/80 rounded-3xl p-8 shadow-xl border border-white/40">
+            <i class="fas fa-cogs text-4xl text-burgundy mb-5"></i>
+            <p class="italic text-gray-600 text-lg">“El objetivo es que SURBERRIES transmita solidez en cada interacción digital, desde su web hasta cada publicación. Sin intermitencias, sin esfuerzo interno.”</p>
+            <div class="mt-7 flex items-center gap-4"><div class="w-12 h-12 rounded-full bg-burgundy flex items-center justify-center text-white font-bold text-xl">N</div><div><p class="font-bold">NXCHILE TECH</p><p class="text-sm text-gray-500">Continuidad exportadora premium</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 8 — CIERRE + CTA FINAL (berries fondo oscuro) -->
+    <section id="cierre" class="relative min-h-[80vh] flex items-center justify-center overflow-hidden section-fade">
+      <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1587234425994-86b6b0a588c1?q=80&w=1974&auto=format" alt="Berries exportación premium" class="w-full h-full object-cover brightness-[0.35]">
+        <div class="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/60 to-transparent"></div>
+      </div>
+      <div class="relative z-10 text-center px-6 max-w-5xl mx-auto text-white">
+        <i class="fas fa-seedling text-5xl text-beige-light/60 mb-6"></i>
+        <h2 class="font-sans text-5xl md:text-7xl font-bold leading-tight">Hoy no basta con existir.</h2>
+        <p class="text-2xl md:text-3xl mt-5 font-light">Las empresas que transmiten continuidad y presencia <span class="border-b-2 border-burgundy">generan más confianza</span>.</p>
+        <div class="my-8 h-px w-20 bg-white/30 mx-auto"></div>
+        <p class="text-xl text-white/80">SURBERRIES + NXCHILE TECH<br><span class="text-beige-light font-medium">Continuidad digital para una exportadora moderna.</span></p>
+        
+        <!-- Oferta recordatoria -->
+        <div class="mt-8 inline-block bg-burgundy/80 backdrop-blur-md rounded-full px-5 py-2 text-sm font-semibold">
+          ⚡ Oferta vigente: Mayo de regalo si confirmas hoy
+        </div>
+        
+        <div class="flex flex-wrap gap-6 justify-center mt-10">
+          <a href="#plan-unico" class="px-10 py-4 bg-burgundy text-white rounded-full font-bold text-lg hover:bg-deep-green transition-all shadow-2xl">Conversemos <i class="fas fa-comment-dots ml-2"></i></a>
+          <a href="#plan-unico" class="px-10 py-4 bg-white/10 backdrop-blur-sm border border-white/30 rounded-full font-medium hover:bg-white/20 transition-all">Iniciar continuidad digital</a>
+        </div>
+        <div class="mt-16 flex justify-center gap-8 text-white/30 text-xs">
+          <span>© NXCHILE TECH — Soporte externo de presencia corporativa</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- script observador de secciones -->
+  <script>
+    const fadeSections = document.querySelectorAll('.section-fade');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    fadeSections.forEach(section => observer.observe(section));
+    
+    // Asegurar visibilidad inicial de elementos con animación
+    document.querySelectorAll('.animate-fade-up, .animate-fade-in').forEach(el => el.style.opacity = '1');
+  </script>
+</body>
+</html>

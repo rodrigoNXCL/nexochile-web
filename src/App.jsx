@@ -6,23 +6,25 @@ import ContactForm from "./components/ContactForm";
 import BannerClientes from "./components/BannerClientes";
 import Servicios from "./components/Servicios";
 import Capacitacion from "./components/Capacitacion";
-import PresentacionSURBERRIES from './pages/PresentacionSURBERRIES';
+import PresentacionSURBERRIES from './pages/PresentacionSURBERRIES'; // ← Nombre exacto
 
 function App() {
   const [mostrarPropuesta, setMostrarPropuesta] = useState(false);
 
   useEffect(() => {
-    // Detectar si la URL contiene /propuesta-surberries
+    // Detectar si la URL termina en /propuesta-surberries
     const path = window.location.pathname;
     if (path === '/propuesta-surberries') {
       setMostrarPropuesta(true);
     }
   }, []);
 
+  // Si la ruta es la de la propuesta, solo mostramos esa página (sin navbar, footer)
   if (mostrarPropuesta) {
     return <PresentacionSURBERRIES />;
   }
 
+  // Sitio normal
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
