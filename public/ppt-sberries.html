@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURBERRIES + NXCHILE TECH | Continuidad Digital Corporativa</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        carbon: '#1a1a1a',
+                        'carbon-dark': '#0f0f0f',
+                        'export-green': '#1b4332',
+                        'deep-green': '#0d3328',
+                        burgundy: '#722f37',
+                        'burgundy-dark': '#5a252c',
+                        beige: '#f5f1e8',
+                        'beige-light': '#faf8f3',
+                        cream: '#e8e4d9'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f0f;
+            color: #f5f1e8;
+            overflow-x: hidden;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #722f37;
+            border-radius: 4px;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero Background */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15,15,15,0.95) 0%, rgba(27,67,50,0.85) 50%, rgba(114,47,55,0.8) 100%),
+                        url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Grain Texture */
+        .grain {
+            position: relative;
+        }
+        .grain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Card Hover Effects */
+        .premium-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
+        }
+
+        /* Button Styles */
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        .btn-premium:hover::before {
+            left: 100%;
+        }
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(114,47,55,0.5);
+        }
+
+        /* Navigation */
+        .nav-floating {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 50;
+            background: rgba(26,26,26,0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(245,241,232,0.1);
+        }
+
+        /* Split Screen */
+        .split-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(245,241,232,0.3), transparent);
+            transform: translateX(-50%);
+        }
+
+        /* Plan Card */
+        .plan-card {
+            background: linear-gradient(145deg, rgba(26,26,26,0.9) 0%, rgba(15,15,15,0.95) 100%);
+            border: 1px solid rgba(245,241,232,0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .plan-card:hover {
+            border-color: rgba(114,47,55,0.5);
+            transform: translateY(-5px);
+        }
+        .plan-card.featured {
+            border-color: rgba(114,47,55,0.8);
+            background: linear-gradient(145deg, rgba(114,47,55,0.15) 0%, rgba(26,26,26,0.95) 100%);
+        }
+
+        /* Smooth parallax */
+        .parallax {
+            will-change: transform;
+        }
+
+        /* Text Gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, #f5f1e8 0%, #a8a090 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+        }
+
+        /* Section spacing */
+        section {
+            position: relative;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="nav-floating rounded-full px-6 py-3 hidden md:block">
+        <div class="flex items-center gap-6 text-sm font-medium text-beige/70">
+            <a href="#contexto" class="hover:text-beige transition-colors">Contexto</a>
+            <a href="#valor" class="hover:text-beige transition-colors">Valor</a>
+            <a href="#servicios" class="hover:text-beige transition-colors">Servicios</a>
+            <a href="#planes" class="hover:text-beige transition-colors">Planes</a>
+            <a href="#contacto" class="px-4 py-2 bg-burgundy text-beige rounded-full hover:bg-burgundy-dark transition-colors">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Section 1: HERO -->
+    <section class="hero-bg min-h-screen flex items-center justify-center grain relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-carbon-dark/50"></div>
+        
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Logos -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-16 reveal">
+                    <div class="logo-container">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDAgNDBDMTEwIDQwIDExOCA0OCAxMTggNThDMTE4IDY4IDExMCA3NiAxMDAgNzZDOTAgNzYgODIgNjggODIgNThDODIgNDggOTAgNDAgMTAwIDQwWiIgZmlsbD0iI2Y1ZjFlOCIvPgo8cGF0aCBkPSJNMTAwIDc2VjE2MCIgc3Ryb2tlPSIjZjVmMWU4IiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTMwIDkwVjE3NCIgc3Ryb2tlPSIjZjVmMWU4IiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC44Ii8+CjxwYXRoIGQ9Ik03MCA5MFYxNzQiIHN0cm9rZT0iI2Y1ZjFlOCIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOCIvPgo8cGF0aCBkPSJNMTMwIDkwQzEzMCA5MCAxMDAgNzYgMTAwIDc2IiBzdHJva2U9IiNmNWYxZTgiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMzAgOTBDMTMwIDkwIDE2MCAxMDQgMTYwIDEwNEMxNjQgMTA0IDE2OCAxMDggMTY4IDExMkMxNjggMTE2IDE2NCAxMjAgMTYwIDEyMEMxNTYgMTIwIDE1MiAxMTYgMTUyIDExMiIgZmlsbD0iI2Y1ZjFlOCIvPgo8cGF0aCBkPSJNNzAgOTBDNzAgOTAgNDAgNzYgNDAgNzYiIHN0cm9rZT0iI2Y1ZjFlOCIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNiIvPgo8L3N2Zz4K" alt="NXCHILE TECH" class="h-20 w-auto">
+                    </div>
+                    <div class="text-beige/40 text-4xl font-serif italic reveal">+</div>
+                    <div class="logo-container bg-beige rounded-2xl p-6 reveal">
+                        <img src="cid:1" alt="SURBERRIES" class="h-32 w-auto">
+                    </div>
+                </div>
+
+                <!-- Main Title -->
+                <div class="text-center mb-12">
+                    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-medium text-beige leading-tight mb-8 reveal">
+                        Presencia digital<br>
+                        <span class="italic text-burgundy">corporativa</span> para una<br>
+                        exportadora moderna.
+                    </h1>
+                    <p class="text-lg md:text-xl text-beige/70 max-w-3xl mx-auto font-light leading-relaxed reveal">
+                        NXCHILE ayuda a SURBERRIES a mantener una presencia digital activa, consistente y profesional 
+                        alineada a su imagen exportadora.
+                    </p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 reveal">
+                    <a href="#planes" class="btn-premium px-8 py-4 bg-burgundy text-beige rounded-full font-medium text-lg border border-burgundy">
+                        Ver propuesta
+                    </a>
+                    <a href="#contexto" class="btn-premium px-8 py-4 bg-transparent text-beige rounded-full font-medium text-lg border border-beige/30 hover:border-beige/60 hover:bg-beige/5">
+                        Continuar
+                    </a>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <i data-lucide="chevron-down" class="w-6 h-6 text-beige/50"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: CONTEXTO ACTUAL -->
+    <section id="contexto" class="min-h-screen bg-carbon-dark py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal">
+                    <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Contexto Actual</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-medium text-beige mb-6">
+                        Hoy la presencia digital también forma parte de la imagen exportadora.
+                    </h2>
+                </div>
+
+                <!-- Split Screen Content -->
+                <div class="grid md:grid-cols-2 gap-0 md:gap-16 items-center relative">
+                    <div class="split-line hidden md:block"></div>
+                    
+                    <!-- Left: Problem -->
+                    <div class="reveal-left mb-12 md:mb-0">
+                        <div class="bg-carbon rounded-2xl p-8 md:p-12 border border-white/5">
+                            <div class="w-16 h-16 bg-red-900/30 rounded-full flex items-center justify-center mb-6">
+                                <i data-lucide="alert-circle" class="w-8 h-8 text-red-400"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl text-beige mb-4">Sin continuidad digital</h3>
+                            <ul class="space-y-3 text-beige/60">
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 mt-1">•</span>
+                                    <span>Redes sociales abandonadas</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 mt-1">•</span>
+                                    <span>Información desactualizada</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 mt-1">•</span>
+                                    <span>Falta de profesionalismo percibido</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 mt-1">•</span>
+                                    <span>Pérdida de oportunidades comerciales</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right: Solution -->
+                    <div class="reveal-right">
+                        <div class="bg-export-green/20 rounded-2xl p-8 md:p-12 border border-export-green/30">
+                            <div class="w-16 h-16 bg-export-green/50 rounded-full flex items-center justify-center mb-6">
+                                <i data-lucide="check-circle" class="w-8 h-8 text-emerald-400"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl text-beige mb-4">Con presencia corporativa</h3>
+                            <ul class="space-y-3 text-beige/80">
+                                <li class="flex items-start gap-3">
+                                    <span class="text-emerald-400 mt-1">✓</span>
+                                    <span>Actividad constante y profesional</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-emerald-400 mt-1">✓</span>
+                                    <span>Información actualizada</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-emerald-400 mt-1">✓</span>
+                                    <span>Imagen sólida y confiable</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-emerald-400 mt-1">✓</span>
+                                    <span>Mayor credibilidad internacional</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Points -->
+                <div class="mt-20 grid md:grid-cols-5 gap-6 reveal">
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 text-burgundy"></i>
+                        </div>
+                        <h4 class="font-serif text-beige mb-2">Continuidad</h4>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="eye" class="w-5 h-5 text-burgundy"></i>
+                        </div>
+                        <h4 class="font-serif text-beige mb-2">Presencia</h4>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="award" class="w-5 h-5 text-burgundy"></i>
+                        </div>
+                        <h4 class="font-serif text-beige mb-2">Profesionalismo</h4>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="activity" class="w-5 h-5 text-burgundy"></i>
+                        </div>
+                        <h4 class="font-serif text-beige mb-2">Actividad</h4>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="layers" class="w-5 h-5 text-burgundy"></i>
+                        </div>
+                        <h4 class="font-serif text-beige mb-2">Consistencia</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: EL VALOR REAL -->
+    <section id="valor" class="min-h-screen bg-beige text-carbon py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal">
+                    <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">El Valor Real</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-medium text-carbon mb-6">
+                        Más allá de los números,<br>
+                        <span class="italic text-burgundy">construimos percepción</span>
+                    </h2>
+                    <p class="text-carbon/70 max-w-2xl mx-auto text-lg">
+                        Una empresa exportadora no solo es evaluada por su producto. También es evaluada por su presencia digital.
+                    </p>
+                </div>
+
+                <!-- Value Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield-check" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Más confianza</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            La continuidad digital genera respaldo y credibilidad ante clientes y partners internacionales.
+                        </p>
+                    </div>
+
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="building-2" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Imagen más sólida</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            Proyección de una empresa estable, profesional y comprometida con su presencia en el mercado.
+                        </p>
+                    </div>
+
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="globe" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Validación internacional</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            Presencia activa que valida la seriedad de la empresa ante compradores del exterior.
+                        </p>
+                    </div>
+
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="trending-up" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Más presencia</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            Visibilidad constante que mantiene a SURBERRIES en la mente de clientes y prospects.
+                        </p>
+                    </div>
+
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="link" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Coherencia corporativa</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            Alineación perfecta entre la identidad de marca y todos los puntos de contacto digital.
+                        </p>
+                    </div>
+
+                    <div class="premium-card bg-white/60 backdrop-blur rounded-2xl p-8 border border-carbon/5 reveal">
+                        <div class="w-14 h-14 bg-burgundy/10 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="handshake" class="w-7 h-7 text-burgundy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl text-carbon mb-3">Respaldo comercial</h3>
+                        <p class="text-carbon/60 leading-relaxed">
+                            Herramienta de apoyo para el equipo comercial en negociaciones y presentaciones.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: WEB + RRSS -->
+    <section class="min-h-screen bg-carbon py-20 grain overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <!-- Left Content -->
+                    <div class="reveal-left">
+                        <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Web + Redes Sociales</span>
+                        <h2 class="font-serif text-4xl md:text-5xl font-medium text-beige mb-6 leading-tight">
+                            La web valida la empresa.<br>
+                            <span class="italic text-burgundy">Las redes muestran continuidad.</span>
+                        </h2>
+                        <p class="text-beige/70 text-lg mb-8 leading-relaxed">
+                            exportsurberries.com se convierte en el hub central de información, mientras las redes sociales 
+                            demuestran actividad constante y profesionalismo en el tiempo.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-export-green/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="monitor" class="w-5 h-5 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-beige mb-1">Sitio Web Corporativo</h4>
+                                    <p class="text-beige/60 text-sm">Información actualizada, profesional y alineada a estándares internacionales.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-burgundy/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="instagram" class="w-5 h-5 text-burgundy"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-beige mb-1">Redes Sociales Activas</h4>
+                                    <p class="text-beige/60 text-sm">Contenido coherente que refuerza la imagen exportadora premium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Visual -->
+                    <div class="reveal-right relative">
+                        <div class="relative z-10">
+                            <!-- Laptop Mockup -->
+                            <div class="bg-carbon-dark rounded-xl p-4 shadow-2xl border border-white/10 mb-6">
+                                <div class="bg-beige rounded overflow-hidden aspect-video relative">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-export-green/20 to-burgundy/20"></div>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <img src="cid:1" alt="SURBERRIES Web" class="h-20 mx-auto mb-4">
+                                            <div class="text-carbon font-serif text-2xl">exportsurberries.com</div>
+                                        </div>
+                                    </div>
+                                    <!-- Browser Chrome -->
+                                    <div class="absolute top-0 left-0 right-0 h-8 bg-carbon/10 flex items-center px-4 gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-400/50"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-400/50"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-400/50"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone Mockups -->
+                            <div class="flex gap-4 justify-center">
+                                <div class="bg-carbon-dark rounded-2xl p-3 shadow-xl border border-white/10 w-32">
+                                    <div class="bg-gradient-to-b from-purple-900/40 to-pink-900/40 rounded-lg aspect-[9/16] flex items-center justify-center">
+                                        <i data-lucide="instagram" class="w-8 h-8 text-beige/60"></i>
+                                    </div>
+                                </div>
+                                <div class="bg-carbon-dark rounded-2xl p-3 shadow-xl border border-white/10 w-32">
+                                    <div class="bg-gradient-to-b from-blue-900/40 to-blue-800/40 rounded-lg aspect-[9/16] flex items-center justify-center">
+                                        <i data-lucide="facebook" class="w-8 h-8 text-beige/60"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Decorative Elements -->
+                        <div class="absolute -top-10 -right-10 w-64 h-64 bg-burgundy/20 rounded-full blur-3xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-export-green/20 rounded-full blur-3xl"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: QUÉ HACE NXCHILE -->
+    <section id="servicios" class="min-h-screen bg-carbon-dark py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-20 reveal">
+                    <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Nuestro Rol</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-medium text-beige mb-6">
+                        ¿Qué hace NXCHILE?
+                    </h2>
+                    <p class="text-beige/70 max-w-3xl mx-auto text-lg leading-relaxed">
+                        NXCHILE mantiene activa y consistente la presencia digital de SURBERRIES mediante contenido 
+                        alineado al rubro exportador y su imagen corporativa.
+                    </p>
+                </div>
+
+                <!-- Services Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-burgundy to-burgundy-dark rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="calendar-clock" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Continuidad Digital</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Publicación constante y planificada que mantiene la presencia activa sin interrupciones.
+                        </p>
+                    </div>
+
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-export-green to-deep-green rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="palette" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Soporte Visual</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Creación y curación de contenido gráfico alineado a la identidad corporativa premium.
+                        </p>
+                    </div>
+
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-700 to-amber-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="building" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Presencia Corporativa</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Comunicación profesional que refuerza el posicionamiento como exportadora seria.
+                        </p>
+                    </div>
+
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-800 to-blue-950 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="wrench" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Mantención Activa</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Actualización permanente de plataformas, información y contenidos relevantes.
+                        </p>
+                    </div>
+
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-800 to-emerald-950 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Respaldo Digital</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Soporte continuo que evita caídas en la presencia y mantiene la coherencia visual.
+                        </p>
+                    </div>
+
+                    <div class="group premium-card bg-carbon rounded-2xl p-8 border border-white/5 reveal">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-900 to-purple-950 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="layers" class="w-8 h-8 text-beige"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-beige mb-3">Coherencia de Marca</h3>
+                        <p class="text-beige/60 leading-relaxed">
+                            Alineación perfecta entre todos los canales digitales y la identidad SURBERRIES.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: BENEFICIOS -->
+    <section class="min-h-screen bg-beige text-carbon py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Beneficios</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-medium text-carbon mb-6">
+                        Ventajas de trabajar con NXCHILE
+                    </h2>
+                </div>
+
+                <!-- Benefits Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="building-2" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Imagen corporativa más sólida</h4>
+                                <p class="text-carbon/60 text-sm">Proyección profesional constante.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="activity" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Redes activas y consistentes</h4>
+                                <p class="text-carbon/60 text-sm">Sin periodos de inactividad.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Menor carga interna</h4>
+                                <p class="text-carbon/60 text-sm">Libera recursos del equipo interno.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="eye" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Continuidad visual profesional</h4>
+                                <p class="text-carbon/60 text-sm">Estética cuidada y consistente.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Mejor percepción comercial</h4>
+                                <p class="text-carbon/60 text-sm">Mayor credibilidad en el mercado.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card bg-white rounded-2xl p-6 border border-carbon/5 reveal">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-burgundy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="globe" class="w-6 h-6 text-burgundy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif text-lg text-carbon mb-2">Presencia exportadora moderna</h4>
+                                <p class="text-carbon/60 text-sm">Alineada a estándares internacionales.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Message -->
+                <div class="bg-carbon text-beige rounded-2xl p-8 md:p-12 border border-burgundy/30 reveal text-center max-w-4xl mx-auto">
+                    <div class="w-16 h-16 bg-burgundy/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="image" class="w-8 h-8 text-burgundy"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl mb-4">Contenido Visual Profesional</h3>
+                    <p class="text-beige/80 leading-relaxed">
+                        El contenido gráfico y visual es desarrollado por NXCHILE, evitando dependencia constante de envío de material interno. 
+                        Esto permite mayor agilidad, consistencia y profesionalismo en la comunicación digital.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: PLANES -->
+    <section id="planes" class="min-h-screen bg-carbon py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Propuesta</span>
+                    <h2 class="font-serif text-4xl md:text-6xl font-medium text-beige mb-6">
+                        Planes de Continuidad Digital
+                    </h2>
+                    <p class="text-beige/70 max-w-2xl mx-auto">
+                        Soluciones escalables según las necesidades de presencia digital de SURBERRIES.
+                    </p>
+                </div>
+
+                <!-- Plans Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Plan 1 -->
+                    <div class="plan-card rounded-2xl p-6 reveal">
+                        <div class="mb-6">
+                            <h3 class="font-serif text-xl text-beige mb-2">Presencia Base</h3>
+                            <div class="h-px bg-white/10 my-4"></div>
+                            <p class="text-beige/60 text-sm">Mantenimiento esencial de presencia digital.</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>4 publicaciones/mes</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Instagram + Facebook</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Contenido gráfico básico</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Reporte mensual</span>
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 border border-beige/30 text-beige rounded-lg hover:bg-beige/5 transition-colors text-sm font-medium">
+                            Consultar
+                        </button>
+                    </div>
+
+                    <!-- Plan 2 -->
+                    <div class="plan-card featured rounded-2xl p-6 reveal">
+                        <div class="mb-2">
+                            <span class="text-xs font-medium text-burgundy bg-burgundy/20 px-3 py-1 rounded-full">Recomendado</span>
+                        </div>
+                        <div class="mb-6">
+                            <h3 class="font-serif text-xl text-beige mb-2">Presencia Corporativa</h3>
+                            <div class="h-px bg-white/10 my-4"></div>
+                            <p class="text-beige/60 text-sm">Presencia completa y profesional.</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>8-10 publicaciones/mes</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Multi-plataforma</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Diseño premium personalizado</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Gestión de comunidad</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Reporte quincenal</span>
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 bg-burgundy text-beige rounded-lg hover:bg-burgundy-dark transition-colors text-sm font-medium">
+                            Seleccionar
+                        </button>
+                    </div>
+
+                    <!-- Plan 3 -->
+                    <div class="plan-card rounded-2xl p-6 reveal">
+                        <div class="mb-6">
+                            <h3 class="font-serif text-xl text-beige mb-2">Presencia Extendida</h3>
+                            <div class="h-px bg-white/10 my-4"></div>
+                            <p class="text-beige/60 text-sm">Cobertura integral de canales.</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>12-15 publicaciones/mes</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Todas las redes</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Contenido multimedia</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Actualización web</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Reporte semanal</span>
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 border border-beige/30 text-beige rounded-lg hover:bg-beige/5 transition-colors text-sm font-medium">
+                            Consultar
+                        </button>
+                    </div>
+
+                    <!-- Plan 4 -->
+                    <div class="plan-card rounded-2xl p-6 reveal">
+                        <div class="mb-6">
+                            <h3 class="font-serif text-xl text-beige mb-2">Presencia + Soporte</h3>
+                            <div class="h-px bg-white/10 my-4"></div>
+                            <p class="text-beige/60 text-sm">Solución integral completa.</p>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Todo lo anterior</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Soporte operativo digital</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Fichas técnicas</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Formatos documentales</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-beige/70 text-sm">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                <span>Soporte prioritario</span>
+                            </li>
+                        </ul>
+                        <button class="w-full py-3 border border-beige/30 text-beige rounded-lg hover:bg-beige/5 transition-colors text-sm font-medium">
+                            Consultar
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: SOPORTE OPERATIVO -->
+    <section class="min-h-screen bg-carbon-dark py-20 grain">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <!-- Left Visual -->
+                    <div class="reveal-left order-2 lg:order-1">
+                        <div class="relative">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-4 mt-8">
+                                    <div class="bg-carbon rounded-xl p-6 border border-white/5">
+                                        <i data-lucide="file-text" class="w-8 h-8 text-burgundy mb-3"></i>
+                                        <h4 class="font-serif text-beige mb-2">Fichas Técnicas</h4>
+                                        <p class="text-beige/60 text-sm">Documentación profesional actualizada.</p>
+                                    </div>
+                                    <div class="bg-carbon rounded-xl p-6 border border-white/5">
+                                        <i data-lucide="image" class="w-8 h-8 text-emerald-400 mb-3"></i>
+                                        <h4 class="font-serif text-beige mb-2">Material Visual</h4>
+                                        <p class="text-beige/60 text-sm">Banco de imágenes premium.</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="bg-carbon rounded-xl p-6 border border-white/5">
+                                        <i data-lucide="file-check" class="w-8 h-8 text-amber-500 mb-3"></i>
+                                        <h4 class="font-serif text-beige mb-2">Formatos</h4>
+                                        <p class="text-beige/60 text-sm">Templates corporativos.</p>
+                                    </div>
+                                    <div class="bg-carbon rounded-xl p-6 border border-white/5">
+                                        <i data-lucide="hard-drive" class="w-8 h-8 text-blue-400 mb-3"></i>
+                                        <h4 class="font-serif text-beige mb-2">Respaldo Digital</h4>
+                                        <p class="text-beige/60 text-sm">Almacenamiento y organización.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Decorative -->
+                            <div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
+                                <div class="absolute inset-0 bg-burgundy/10 rounded-full blur-3xl"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content -->
+                    <div class="reveal-right order-1 lg:order-2">
+                        <span class="text-burgundy font-medium tracking-widest text-sm uppercase mb-4 block">Soporte Operativo Digital</span>
+                        <h2 class="font-serif text-4xl md:text-5xl font-medium text-beige mb-6 leading-tight">
+                            NXCHILE funciona como respaldo externo de<br>
+                            <span class="italic text-burgundy">continuidad digital corporativa</span>
+                        </h2>
+                        <p class="text-beige/70 text-lg mb-8 leading-relaxed">
+                            Más allá de la gestión de redes, ofrecemos un respaldo integral que incluye documentación, 
+                            formatos y material visual que fortalece la operación comercial de SURBERRIES.
+                        </p>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-export-green/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-emerald-400 font-serif font-bold">01</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-beige mb-1">Fichas Técnicas Actualizadas</h4>
+                                    <p class="text-beige/60 text-sm">Documentación profesional para clientes y distribuidores.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-burgundy/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-burgundy font-serif font-bold">02</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-beige mb-1">Formatos Corporativos</h4>
+                                    <p class="text-beige/60 text-sm">Templates para presentaciones, cotizaciones y comunicación.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-amber-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <span class="text-amber-500 font-serif font-bold">03</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-beige mb-1">Soporte Documental Continuo</h4>
+                                    <p class="text-beige/60 text-sm">Actualización y mantenimiento de material corporativo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 9: CIERRE -->
+    <section id="contacto" class="min-h-screen relative flex items-center justify-center grain overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-carbon via-carbon-dark to-black"></div>
+        <div class="absolute inset-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1596450523091-70b51379a98b?auto=format&fit=crop&w=2000&q=80" 
+                 alt="Berries Premium" 
+                 class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-carbon/80 to-carbon/50"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                
+                <!-- Logos -->
+                <div class="flex items-center justify-center gap-6 mb-12 reveal">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDAgNDBDMTEwIDQwIDExOCA0OCAxMTggNThDMTE4IDY4IDExMCA3NiAxMDAgNzZDOTAgNzYgODIgNjggODIgNThDODIgNDggOTAgNDAgMTAwIDQwWiIgZmlsbD0iI2Y1ZjFlOCIvPgo8cGF0aCBkPSJNMTAwIDc2VjE2MCIgc3Ryb2tlPSIjZjVmMWU4IiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTMwIDkwVjE3NCIgc3Ryb2tlPSIjZjVmMWU4IiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC44Ii8+CjxwYXRoIGQ9Ik03MCA5MFYxNzQiIHN0cm9rZT0iI2Y1ZjFlOCIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOCIvPgo8cGF0aCBkPSJNMTMwIDkwQzEzMCA5MCAxMDAgNzYgMTAwIDc2IiBzdHJva2U9IiNmNWYxZTgiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMzAgOTBDMTMwIDkwIDE2MCAxMDQgMTYwIDEwNEMxNjQgMTA0IDE2OCAxMDggMTY4IDExMkMxNjggMTE2IDE2NCAxMjAgMTYwIDEyMEMxNTYgMTIwIDE1MiAxMTYgMTUyIDExMiIgZmlsbD0iI2Y1ZjFlOCIvPgo8cGF0aCBkPSJNNzAgOTBDNzAgOTAgNDAgNzYgNDAgNzYiIHN0cm9rZT0iI2Y1ZjFlOCIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNiIvPgo8L3N2Zz4K" alt="NXCHILE" class="h-16 w-auto opacity-80">
+                    <span class="text-beige/40 text-3xl font-serif">+</span>
+                    <img src="cid:1" alt="SURBERRIES" class="h-20 w-auto bg-beige/90 rounded-lg p-2">
+                </div>
+
+                <!-- Main Message -->
+                <h2 class="font-serif text-5xl md:text-7xl font-medium text-beige mb-8 leading-tight reveal">
+                    Hoy no basta con existir.<br>
+                    <span class="italic text-burgundy">Las empresas que transmiten continuidad</span><br>
+                    y presencia generan más confianza.
+                </h2>
+
+                <p class="text-xl text-beige/70 mb-12 reveal">
+                    SURBERRIES + NXCHILE TECH<br>
+                    <span class="text-base">Continuidad digital para una exportadora moderna.</span>
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 reveal">
+                    <a href="mailto:contacto@nxchile.tech" class="btn-premium px-10 py-5 bg-burgundy text-beige rounded-full font-medium text-lg border border-burgundy shadow-2xl shadow-burgundy/30">
+                        Conversemos
+                    </a>
+                    <a href="#planes" class="btn-premium px-10 py-5 bg-transparent text-beige rounded-full font-medium text-lg border border-beige/40 hover:border-beige hover:bg-beige/5">
+                        Iniciar continuidad digital
+                    </a>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-beige/60 text-sm reveal">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>contacto@nxchile.tech</span>
+                    </div>
+                    <div class="hidden md:block w-1 h-1 bg-beige/30 rounded-full"></div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span>exportsurberries.com</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="absolute bottom-8 left-0 right-0 text-center text-beige/30 text-xs reveal">
+            <p>© 2026 NXCHILE TECH - Todos los derechos reservados</p>
+        </div>
+    </section>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Animations -->
+    <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Smooth parallax effect for hero
+        gsap.to('.hero-bg', {
+            backgroundPosition: 'center 100%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero-bg',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation background on scroll
+        const nav = document.querySelector('.nav-floating');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(26,26,26,0.95)';
+            } else {
+                nav.style.background = 'rgba(26,26,26,0.8)';
+            }
+        });
+    </script>
+
+</body>
+</html>
