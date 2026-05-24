@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pedro y su papá Rodrigo | Camiones y fruta | Disertación Kinder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', 'Comic Neue', system-ui, -apple-system, 'Nunito', sans-serif;
+      background: linear-gradient(145deg, #eef5ff 0%, #d4e6f1 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .presentation {
+      max-width: 1300px;
+      width: 100%;
+      background: #ffffffdd;
+      backdrop-filter: blur(2px);
+      border-radius: 4rem;
+      box-shadow: 0 25px 45px rgba(0, 20, 0, 0.2), 0 0 0 8px #f9c35c, 0 0 0 12px #2b6e3c;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .screen {
+      display: none;
+      padding: 2rem 2rem 2.5rem;
+      animation: fadePop 0.4s ease-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadePop {
+      0% { opacity: 0; transform: scale(0.97); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #0f4c2c, #e67e22);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #1e5a3a;
+      border-left: 10px solid #f4a261;
+      padding-left: 1rem;
+      margin: 1rem 0 1.5rem 0;
+    }
+
+    button {
+      background: #f9b23f;
+      border: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      font-family: inherit;
+      padding: 10px 24px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.08s linear;
+      box-shadow: 0 6px 0 #b4621a;
+      color: #2d2b26;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #b4621a;
+    }
+
+    .btn-primary {
+      background: #e67e22;
+      color: white;
+      box-shadow: 0 6px 0 #9b4a0e;
+    }
+
+    .btn-secondary {
+      background: #ffcd94;
+      box-shadow: 0 6px 0 #b97f44;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 2rem 0 1rem;
+    }
+
+    /* ESTILO MEJORADO PARA FOTOS: se ven completas, sin recortes */
+    .photo-frame {
+      background: #fef7e0;
+      border-radius: 2rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 3px dashed #f7b05e;
+      text-align: center;
+      transition: 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-frame img {
+      max-width: 100%;
+      max-height: 320px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 1.5rem;
+      background: #fff5e6;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .photo-label {
+      background: #ffdd99;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      font-weight: bold;
+      color: #7a4a1a;
+    }
+
+    .cards-fruta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .card-fruta {
+      background: #fff5e6;
+      border-radius: 40px;
+      padding: 20px;
+      text-align: center;
+      width: 160px;
+      transition: all 0.2s;
+      border: 2px solid #f4cda6;
+      cursor: default;
+    }
+
+    .emoji-big {
+      font-size: 3.8rem;
+    }
+
+    .question-block {
+      background: #eaf7e6;
+      border-radius: 60px;
+      padding: 1.5rem;
+      margin: 1.8rem 0;
+      text-align: center;
+    }
+
+    .respuesta-botones {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0 0;
+    }
+
+    .respuesta-btn {
+      background: #f3d382;
+      font-size: 1.2rem;
+      padding: 8px 20px;
+    }
+
+    .game-area {
+      background: #cbe5cd;
+      border-radius: 60px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .fruits-game {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .fruit-card {
+      background: white;
+      border-radius: 50px;
+      padding: 15px;
+      width: 120px;
+      cursor: pointer;
+      transition: 0.05s linear;
+      box-shadow: 0 6px 0 #b98f5c;
+      text-align: center;
+    }
+
+    .fruit-card:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #b98f5c;
+    }
+
+    .truck-zone {
+      background: #306b34;
+      border-radius: 60px;
+      padding: 15px;
+      margin-top: 20px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .loaded-items {
+      background: #fae67a;
+      border-radius: 50px;
+      min-height: 70px;
+      padding: 12px;
+      color: #4a2a0e;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .presentation { border-radius: 2rem; }
+      .screen { padding: 1.2rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      button { font-size: 1rem; padding: 8px 16px; }
+      .card-fruta { width: 130px; }
+      .fruit-card { width: 90px; }
+      .photo-frame img { max-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+<div class="presentation" id="app">
+
+  <!-- Pantalla 1: Bienvenida -->
+  <div id="screen1" class="screen active">
+    <div style="text-align: center;">
+      <h1>🚛 ¡Hola, soy Pedro! 🚛</h1>
+      <div class="photo-frame">
+        <img src="images/foto1_pedro_camion.jpg" alt="Pedro manejando camión" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20250%22%3E%3Crect%20width%3D%22400%22%20height%3D%22250%22%20fill%3D%22%23f4a261%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-size%3D%2220%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3EFOTO%20PEDRO%20%26%20CAMIÓN%3C%2Ftext%3E%3C%2Fsvg%3E';">
+        <div class="photo-label">📸 Pedro muy feliz cargando su camión favorito</div>
+      </div>
+      <p style="font-size: 1.7rem; background: #ffeaac; border-radius: 60px; padding: 12px; margin: 15px 0;">
+        👨‍👦 Voy a presentarles a mi familia y el trabajo de mi papá <strong>Rodrigo</strong>
+      </p>
+      <div class="btn-group">
+        <button id="nextTo2" class="btn-primary">➡️ ¡Empezamos! 🍓🚛</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla 2: Qué hace papá (camiones, fruta, campos) -->
+  <div id="screen2" class="screen">
+    <h2>🚛 Mi papá Rodrigo y los camiones 🍓</h2>
+    <p style="font-size:1.3rem; margin-bottom: 1rem;"><strong>📚 Rodrigo estudió Ingeniería Agrícola</strong>, trabajó en campos y exportadoras, ¡y hoy trabaja con camiones que transportan fruta del campo a muchos lugares! 🚚✨</p>
+    <div class="cards-fruta">
+      <div class="card-fruta"><span class="emoji-big">🍓</span><br>Frutillas</div>
+      <div class="card-fruta"><span class="emoji-big">🫐</span><br>Arándanos</div>
+      <div class="card-fruta"><span class="emoji-big">🍇</span><br>Frambuesas</div>
+      <div class="card-fruta"><span class="emoji-big">🚛❄️</span><br>Transporte refrigerado</div>
+    </div>
+    <div class="photo-frame"><img src="images/foto2_rodrigo_camion.jpg" alt="Rodrigo junto a camión" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20width%3D%22300%22%20height%3D%22180%22%20fill%3D%22%236b8e23%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3EFOTO%20RODRIGO%20CON%20CAMIÓN%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">📸 Rodrigo supervisando camiones llenos de fruta</div></div>
+    <div class="photo-frame"><img src="images/foto3_camion_cargado.jpg" alt="Camión cargado" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20width%3D%22300%22%20height%3D%22180%22%20fill%3D%22%23cd853f%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3ECAMIÓN%20CARGADO%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">🚛 Camión con cajas de fruta fresca</div></div>
+    <div class="photo-frame"><img src="images/foto4_fruta_real.jpg" alt="Frutillas y arándanos" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20width%3D%22300%22%20height%3D%22180%22%20fill%3D%22%23e34234%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3EFRUTAS%20RIQUÍSIMAS%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">🍓 Frutillas, arándanos y frambuesas → las favoritas</div></div>
+    <div class="photo-frame"><img src="images/foto5_campo_ruta.jpg" alt="Campo y ruta" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20width%3D%22300%22%20height%3D%22180%22%20fill%3D%22%235f9e4e%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3ECAMPO%20Y%20CARRETERA%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">🌾 El camión rumbo a dejar la fruta </div></div>
+    <div class="btn-group">
+      <button id="prevTo1" class="btn-secondary">◀ Atrás</button>
+      <button id="nextTo3" class="btn-primary">Siguiente: Tecnología ▶</button>
+    </div>
+  </div>
+
+  <!-- Pantalla 3: Tecnología (breve) -->
+  <div id="screen3" class="screen">
+    <h2>💻 Un poquito de tecnología ✨</h2>
+    <div style="background: #fcf3da; border-radius: 50px; padding: 1.5rem;">
+      <p style="font-size:1.5rem;">🖥️ Además de trabajar con camiones y fruta, Rodrigo también usa computadores y programas para ayudar a algunas empresas a organizar mejor su trabajo.</p>
+      <p style="font-size:1.2rem; margin-top: 10px;">✅ Solo eso: ¡así los camiones viajan mejor y la fruta llega más rápido! 🍎🚛</p>
+    </div>
+    <div class="photo-frame"><img src="images/foto6_rodrigo_pc.jpg" alt="Rodrigo con computadora" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20300%20180%22%3E%3Crect%20width%3D%22300%22%20height%3D%22180%22%20fill%3D%22%23456e91%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3ERODRIGO%20CON%20PC%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">💻 Rodrigo revisando y ayudando con tecnología (¡solo un poquito!)</div></div>
+    <div class="btn-group">
+      <button id="prevTo2" class="btn-secondary">◀ Atrás</button>
+      <button id="nextTo4" class="btn-primary">Participemos juntos ▶</button>
+    </div>
+  </div>
+
+  <!-- Pantalla 4: Interacción con niños -->
+  <div id="screen4" class="screen">
+    <h2>🎤 ¡Ahora participa! 🎤</h2>
+    <div class="question-block">
+      <p style="font-size:1.8rem;">🚛 ¿Quién ha visto camiones grandes? 🚛</p>
+      <div class="respuesta-botones"><button id="respSiCamiones" class="respuesta-btn">✅ ¡Yo sí, muchísimos!</button><button id="respNoCamiones" class="respuesta-btn">🤔 ¡Algunas veces!</button></div>
+      <div id="feedbackCamiones" style="margin-top: 12px; font-size:1.2rem; font-weight: bold;"></div>
+    </div>
+    <div class="question-block">
+      <p style="font-size:1.6rem;">🍓 ¿Qué frutas conocen? 🫐</p>
+      <div class="respuesta-botones"><button data-fruta="frutilla" class="respuesta-btn fruta-btn">🍓 Frutillas</button><button data-fruta="arandano" class="respuesta-btn fruta-btn">🫐 Arándanos</button><button data-fruta="frambuesa" class="respuesta-btn fruta-btn">🍇 Frambuesas</button></div>
+      <div id="feedbackFrutas" style="margin-top:12px; font-size:1.2rem;"></div>
+    </div>
+    <div class="question-block">
+      <p style="font-size:1.6rem;">📦 ¿Qué creen que llevan estos camiones gigantes? 🚛</p>
+      <div class="respuesta-botones"><button data-carga="frutas" class="respuesta-btn carga-btn">🍎 Frutas del campo</button><button data-carga="juguetes" class="respuesta-btn carga-btn">🧸 Juguetes</button><button data-carga="verduras" class="respuesta-btn carga-btn">🥕 Verduras</button></div>
+      <div id="feedbackCarga" style="margin-top:12px; font-size:1.2rem;"></div>
+    </div>
+    <div class="btn-group">
+      <button id="prevTo3" class="btn-secondary">◀ Atrás</button>
+      <button id="nextTo5" class="btn-primary">Mini juego ▶</button>
+    </div>
+  </div>
+
+  <!-- Pantalla 5: Mini juego -->
+  <div id="screen5" class="screen">
+    <h2>❄️ Juego: Frutas que necesitan frío 🧊</h2>
+    <div class="game-area">
+      <p>🔥 Toca las frutas que deben ir en el <strong>camión refrigerado</strong> (las que se echan a perder si hace calor).</p>
+      <div class="fruits-game" id="fruitsContainer"></div>
+      <div class="truck-zone">🚛❄️ CAMIÓN REFRIGERADO ❄️🚛<div id="loadedFruitsList" class="loaded-items">✨ Carga las frutas frías aquí ✨</div></div>
+      <div id="gameMessage" style="margin: 20px 0; font-size:1.4rem; background: #f4e2b0; border-radius: 60px; padding: 12px;"></div>
+      <button id="resetGameBtn" style="background:#e09d32;">🔄 Jugar otra vez</button>
+    </div>
+    <div class="btn-group">
+      <button id="prevTo4" class="btn-secondary">◀ Atrás</button>
+      <button id="nextTo6" class="btn-primary">Terminar y ver cierre ▶</button>
+    </div>
+  </div>
+
+  <!-- Pantalla 6: Cierre -->
+  <div id="screen6" class="screen">
+    <h2>🎉 ¡Gracias, amigos! 🎉</h2>
+    <div class="photo-frame"><img src="images/foto7_familia_pedro.jpg" alt="Familia de Pedro" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20350%20220%22%3E%3Crect%20width%3D%22350%22%20height%3D%22220%22%20fill%3D%22%23f7b787%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20fill%3D%22white%22%20text-anchor%3D%22middle%22%3EFAMILIA%20PEDRO%3C%2Ftext%3E%3C%2Fsvg%3E';"><div class="photo-label">👨‍👩‍👦 ¡Pedro y su hermosa familia! Gracias por acompañarnos ❤️</div></div>
+    <p style="font-size: 1.5rem; background: #c7e9c0; border-radius: 60px; padding: 18px; margin: 20px 0;">🌟 Los camiones, la fruta y el campo son muy importantes. ¡Mi papá Rodrigo ayuda a que la fruta llegue rica a todos lados! 🌟</p>
+    <div class="btn-group"><button id="prevTo5" class="btn-secondary">◀ Atrás</button><button id="restartBtn" class="btn-primary">🔄 Volver a empezar</button></div>
+  </div>
+</div>
+
+<script>
+  // ---- Navegación con historial ----
+  let currentScreen = 1;
+  const totalScreens = 6;
+
+  function showScreen(num, addToHistory = true) {
+    if (num < 1 || num > totalScreens) return;
+    for (let i = 1; i <= totalScreens; i++) {
+      const s = document.getElementById(`screen${i}`);
+      if (s) s.classList.remove('active');
+    }
+    const nextScreen = document.getElementById(`screen${num}`);
+    if (nextScreen) nextScreen.classList.add('active');
+    currentScreen = num;
+
+    // Actualizar historial del navegador (para que los botones atrás/adelante funcionen)
+    if (addToHistory) {
+      const state = { screen: num };
+      const url = new URL(window.location.href);
+      url.searchParams.set('screen', num);
+      history.pushState(state, '', url);
+    }
+  }
+
+  // Escuchar eventos de navegación del navegador (botones atrás/adelante)
+  window.addEventListener('popstate', (event) => {
+    let screenNum = currentScreen;
+    if (event.state && event.state.screen) {
+      screenNum = event.state.screen;
+    } else {
+      // Si no hay estado, intentar leer de la URL
+      const params = new URLSearchParams(window.location.search);
+      const s = parseInt(params.get('screen'));
+      if (!isNaN(s) && s >= 1 && s <= totalScreens) screenNum = s;
+    }
+    // Mostrar pantalla sin agregar otro estado (para evitar bucle)
+    for (let i = 1; i <= totalScreens; i++) {
+      const s = document.getElementById(`screen${i}`);
+      if (s) s.classList.remove('active');
+    }
+    const scr = document.getElementById(`screen${screenNum}`);
+    if (scr) scr.classList.add('active');
+    currentScreen = screenNum;
+  });
+
+  // Navegación manual (con actualización de historial)
+  function goToScreen(num) {
+    if (num === currentScreen) return;
+    showScreen(num, true);
+  }
+
+  // Asignar eventos a todos los botones de navegación
+  document.getElementById('nextTo2')?.addEventListener('click', () => goToScreen(2));
+  document.getElementById('prevTo1')?.addEventListener('click', () => goToScreen(1));
+  document.getElementById('nextTo3')?.addEventListener('click', () => goToScreen(3));
+  document.getElementById('prevTo2')?.addEventListener('click', () => goToScreen(2));
+  document.getElementById('nextTo4')?.addEventListener('click', () => goToScreen(4));
+  document.getElementById('prevTo3')?.addEventListener('click', () => goToScreen(3));
+  document.getElementById('nextTo5')?.addEventListener('click', () => { goToScreen(5); resetGame(); });
+  document.getElementById('prevTo4')?.addEventListener('click', () => goToScreen(4));
+  document.getElementById('nextTo6')?.addEventListener('click', () => goToScreen(6));
+  document.getElementById('prevTo5')?.addEventListener('click', () => goToScreen(5));
+  document.getElementById('restartBtn')?.addEventListener('click', () => { goToScreen(1); resetGame(); });
+
+  // ---- Interacciones de preguntas ----
+  document.getElementById('respSiCamiones')?.addEventListener('click', () => { document.getElementById('feedbackCamiones').innerHTML = '🎉 ¡Qué increíble! Los camiones traen fruta del campo a tu ciudad. 🍓🚛'; });
+  document.getElementById('respNoCamiones')?.addEventListener('click', () => { document.getElementById('feedbackCamiones').innerHTML = '👀 ¡Presta atención afuera! Seguro verás un camión enorme lleno de cajas. 🚛✨'; });
+  document.querySelectorAll('.fruta-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const fruta = btn.getAttribute('data-fruta');
+      const fb = document.getElementById('feedbackFrutas');
+      if (fruta === 'frutilla') fb.innerHTML = '🍓 ¡Las frutillas son deliciosas! Mi papá transporta muchas.';
+      else if (fruta === 'arandano') fb.innerHTML = '🫐 ¡Arándanos súper sanos! Viajan en camiones refrigerados.';
+      else fb.innerHTML = '🍇 Las frambuesas también necesitan frío ¡Qué ricas!';
+    });
+  });
+  document.querySelectorAll('.carga-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const carga = btn.getAttribute('data-carga');
+      const fc = document.getElementById('feedbackCarga');
+      if (carga === 'frutas') fc.innerHTML = '🍎🍓 ¡Correcto! Estos camiones llevan frutas del campo a todos lados. ¡Bien!';
+      else fc.innerHTML = '🐣 Puede ser, pero los camiones de mi papá llevan principalmente FRUTAS riquísimas. ¡Sigue aprendiendo!';
+    });
+  });
+
+  // ---- Mini juego (frutas que necesitan frío) ----
+  const fruitsData = [
+    { name: '🍓 Frutilla', needsCold: true, emoji: '🍓' },
+    { name: '🫐 Arándano', needsCold: true, emoji: '🫐' },
+    { name: '🍇 Frambuesa', needsCold: true, emoji: '🍇' },
+    { name: '🍌 Plátano', needsCold: false, emoji: '🍌' }
+  ];
+  let loadedCorrect = [];
+  let gameActive = true;
+
+  function renderGame() {
+    const container = document.getElementById('fruitsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    fruitsData.forEach(fruit => {
+      const card = document.createElement('div');
+      card.className = 'fruit-card';
+      card.setAttribute('data-needs-cold', fruit.needsCold);
+      card.setAttribute('data-name', fruit.name);
+      card.innerHTML = `<div style="font-size:3rem;">${fruit.emoji}</div><div>${fruit.name}</div>`;
+      card.addEventListener('click', () => handleFruitClick(card, fruit));
+      if (loadedCorrect.includes(fruit.name)) {
+        card.style.opacity = '0.5';
+        card.style.pointerEvents = 'none';
+      }
+      container.appendChild(card);
+    });
+  }
+
+  function handleFruitClick(card, fruit) {
+    if (!gameActive) return;
+    if (loadedCorrect.includes(fruit.name)) {
+      document.getElementById('gameMessage').innerHTML = '🤗 ¡Esa fruta ya está en el camión! Sigue con otra.';
+      return;
+    }
+    if (fruit.needsCold) {
+      loadedCorrect.push(fruit.name);
+      updateLoadedUI();
+      card.style.opacity = '0.5';
+      card.style.pointerEvents = 'none';
+      document.getElementById('gameMessage').innerHTML = `✅ ¡Bien! ${fruit.name} necesita frío, la guardamos en el camión refrigerado. 🚛❄️`;
+      if (loadedCorrect.length === fruitsData.filter(f => f.needsCold).length) {
+        document.getElementById('gameMessage').innerHTML = '🎉🎉 ¡FELICIDADES! Cargaste todas las frutas que necesitan frío. ¡Eres un gran ayudante! 🎉🎉';
+        gameActive = false;
+      }
+    } else {
+      document.getElementById('gameMessage').innerHTML = `🙈 ${fruit.name} no necesita frío, puede ir en un camión normal. ¡Intenta con las frutillas, arándanos o frambuesas! 🍓🫐`;
+    }
+  }
+
+  function updateLoadedUI() {
+    const listDiv = document.getElementById('loadedFruitsList');
+    if (listDiv) {
+      const correctItems = fruitsData.filter(f => f.needsCold && loadedCorrect.includes(f.name));
+      listDiv.innerHTML = correctItems.map(f => `<span style="background:#eeaa44; padding:5px 12px; border-radius:40px;">❄️ ${f.emoji} ${f.name}</span>`).join('');
+      if (correctItems.length === 0) listDiv.innerHTML = '✨ Toca las frutas que necesitan frío ✨';
+    }
+  }
+
+  function resetGame() {
+    loadedCorrect = [];
+    gameActive = true;
+    renderGame();
+    updateLoadedUI();
+    document.getElementById('gameMessage').innerHTML = '🔄 Juego reiniciado. ¡Toca las frutas que necesitan frío! (Frutilla, Arándano, Frambuesa)';
+  }
+
+  document.getElementById('resetGameBtn')?.addEventListener('click', resetGame);
+
+  // Inicializar juego cuando se muestre la pantalla 5 por primera vez, pero ya está.
+  renderGame();
+  updateLoadedUI();
+
+  // Sincronizar la pantalla inicial con la URL (si hay parámetro screen)
+  (function initFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const startScreen = parseInt(params.get('screen'));
+    if (!isNaN(startScreen) && startScreen >= 1 && startScreen <= totalScreens && startScreen !== 1) {
+      showScreen(startScreen, false);
+    } else {
+      // Asegurar que la pantalla 1 está activa y el historial refleja screen=1
+      if (window.location.search !== '?screen=1') {
+        const url = new URL(window.location.href);
+        url.searchParams.set('screen', 1);
+        history.replaceState({ screen: 1 }, '', url);
+      }
+    }
+  })();
+</script>
+</body>
+</html>
